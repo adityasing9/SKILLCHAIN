@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
+import { Navbar } from '../components/Navbar';
 import { 
   Shield, CheckCircle2, ArrowRight, Search, 
   Lock, Award, Users, Zap, Check, ChevronRight, FileCheck, Layers
@@ -17,44 +18,24 @@ export const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans selection:bg-emerald-100 selection:text-emerald-900">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans">
       
-      {/* Top Navbar */}
-      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-xs border-b border-slate-200">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
-          <Link to="/" className="flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white shadow-xs">
-              <Shield className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-bold text-lg text-slate-900 tracking-tight">SkillChain</span>
-          </Link>
-          <div className="flex items-center gap-3 sm:gap-6">
-            <Link to="/" className="text-sm font-medium text-slate-600 hover:text-slate-900">Home</Link>
-            <Link to="/about" className="text-sm font-medium text-slate-600 hover:text-slate-900">About</Link>
-            <Link to="/verify" className="text-sm font-medium text-slate-600 hover:text-slate-900">Verify</Link>
-            <Link to="/login" className="text-sm font-medium text-slate-700 hover:text-slate-900 px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50">
-              Login
-            </Link>
-            <Link to="/register" className="text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg shadow-xs">
-              Get Started
-            </Link>
-          </div>
-        </div>
-      </header>
+      {/* Unified Navbar with Live Theme Selector */}
+      <Navbar />
 
       {/* Hero Section */}
       <section className="pt-16 pb-20 px-4 text-center bg-gradient-to-b from-white to-slate-50 border-b border-slate-100">
         <div className="max-w-4xl mx-auto space-y-6">
           
           {/* Badge */}
-          <div className="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold px-3 py-1 rounded-full">
-            <Shield className="w-3.5 h-3.5 text-emerald-600" />
+          <div className="inline-flex items-center gap-1.5 bg-theme-light border border-theme-border text-theme-primary text-xs font-semibold px-3 py-1 rounded-full transition-all">
+            <Shield className="w-3.5 h-3.5 text-theme-primary" />
             Trusted by 100+ Educational Institutions
           </div>
 
           <h1 className="text-4xl sm:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
             Smart Credential Verification <br />
-            <span className="text-emerald-600">Made Simple</span>
+            <span className="text-theme-primary transition-colors">Made Simple</span>
           </h1>
 
           <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
@@ -66,13 +47,13 @@ export const LandingPage: React.FC = () => {
           <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
             <Link
               to="/login"
-              className="px-6 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm shadow-sm transition-all"
+              className="px-6 py-3 rounded-xl bg-theme-primary hover:bg-theme-hover text-white font-semibold text-sm shadow-xs transition-all"
             >
               Get Started Free
             </Link>
             <Link
               to="/about"
-              className="px-6 py-3 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-medium text-sm shadow-xs transition-all"
+              className="px-6 py-3 rounded-xl bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-semibold text-sm shadow-xs transition-all"
             >
               Learn More
             </Link>
@@ -93,7 +74,7 @@ export const LandingPage: React.FC = () => {
               </div>
               <button
                 type="submit"
-                className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors cursor-pointer"
+                className="bg-theme-primary hover:bg-theme-hover text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors cursor-pointer shadow-xs"
               >
                 Verify
               </button>

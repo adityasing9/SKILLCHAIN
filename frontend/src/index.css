@@ -1,8 +1,59 @@
 @import "tailwindcss";
 
 @layer base {
-  :root {
+  :root, [data-theme="emerald"] {
     --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --primary-color: #059669;
+    --primary-hover: #047857;
+    --primary-light: #ecfdf5;
+    --primary-border: #a7f3d0;
+    --primary-text: #047857;
+    --primary-ring: rgba(5, 150, 105, 0.2);
+  }
+
+  [data-theme="indigo"] {
+    --primary-color: #4f46e5;
+    --primary-hover: #4338ca;
+    --primary-light: #eef2ff;
+    --primary-border: #c7d2fe;
+    --primary-text: #4338ca;
+    --primary-ring: rgba(79, 70, 229, 0.2);
+  }
+
+  [data-theme="sapphire"] {
+    --primary-color: #2563eb;
+    --primary-hover: #1d4ed8;
+    --primary-light: #eff6ff;
+    --primary-border: #bfdbfe;
+    --primary-text: #1d4ed8;
+    --primary-ring: rgba(37, 99, 235, 0.2);
+  }
+
+  [data-theme="teal"] {
+    --primary-color: #0d9488;
+    --primary-hover: #0f766e;
+    --primary-light: #f0fdfa;
+    --primary-border: #99f6e4;
+    --primary-text: #0f766e;
+    --primary-ring: rgba(13, 148, 136, 0.2);
+  }
+
+  [data-theme="amber"] {
+    --primary-color: #d97706;
+    --primary-hover: #b45309;
+    --primary-light: #fffbeb;
+    --primary-border: #fde68a;
+    --primary-text: #b45309;
+    --primary-ring: rgba(217, 119, 6, 0.2);
+  }
+
+  [data-theme="slate"] {
+    --primary-color: #0f172a;
+    --primary-hover: #1e293b;
+    --primary-light: #f1f5f9;
+    --primary-border: #cbd5e1;
+    --primary-text: #0f172a;
+    --primary-ring: rgba(15, 23, 42, 0.2);
   }
   
   body {
@@ -13,6 +64,15 @@
     letter-spacing: -0.01em;
   }
 }
+
+/* Dynamic Theme Utility Classes */
+.bg-theme-primary { background-color: var(--primary-color) !important; }
+.hover\:bg-theme-hover:hover { background-color: var(--primary-hover) !important; }
+.bg-theme-light { background-color: var(--primary-light) !important; }
+.border-theme-border { border-color: var(--primary-border) !important; }
+.text-theme-primary { color: var(--primary-text) !important; }
+.border-theme-primary { border-color: var(--primary-color) !important; }
+.focus\:ring-theme:focus { --tw-ring-color: var(--primary-ring) !important; }
 
 /* Subtle modern scrollbars */
 ::-webkit-scrollbar {

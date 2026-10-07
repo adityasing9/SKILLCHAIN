@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { AuthProvider, useAuth } from './context/AuthContext';
+import { ThemeProvider } from './context/ThemeContext';
 import { LandingPage } from './pages/LandingPage';
 import { AboutPage } from './pages/AboutPage';
 import { LoginPage } from './pages/LoginPage';
@@ -42,9 +43,10 @@ const ProtectedRoute: React.FC<{ allowedRoles: string[]; children: React.ReactNo
 
 export function App() {
   return (
-    <AuthProvider>
-      <BrowserRouter>
-        <Routes>
+    <ThemeProvider>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
           {/* Public Pages */}
           <Route path="/" element={<LandingPage />} />
           <Route path="/about" element={<AboutPage />} />
@@ -106,6 +108,7 @@ export function App() {
         </Routes>
       </BrowserRouter>
     </AuthProvider>
+  </ThemeProvider>
   );
 }
 
