@@ -34,10 +34,10 @@ export const Sidebar: React.FC<SidebarProps> = ({ role }) => {
   const links = role === 'STUDENT' ? studentLinks : role === 'INSTITUTION' ? institutionLinks : adminLinks;
 
   return (
-    <aside className="w-60 bg-white border-r border-slate-200 min-h-[calc(100vh-4rem)] p-4 flex flex-col justify-between shrink-0 shadow-sm">
+    <aside className="w-60 bg-white dark:bg-[#111827] border-r border-slate-200 dark:border-slate-800 min-h-[calc(100vh-4rem)] p-4 flex flex-col justify-between shrink-0 shadow-sm transition-colors">
       <div className="space-y-1.5">
         <div className="px-3 py-1 mb-2">
-          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-mono">
+          <span className="text-[10px] font-bold text-slate-400 dark:text-slate-500 uppercase tracking-wider font-mono">
             {role} Portal
           </span>
         </div>
@@ -51,23 +51,23 @@ export const Sidebar: React.FC<SidebarProps> = ({ role }) => {
                 `flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-medium transition-all ${
                   isActive
                     ? 'bg-theme-light text-theme-primary font-semibold border-l-2 border-theme-primary shadow-xs'
-                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
+                    : 'text-slate-600 dark:text-slate-300 hover:text-slate-900 dark:hover:text-white hover:bg-slate-100/70 dark:hover:bg-slate-800/70'
                 }`
               }
             >
-              <Icon className="w-4 h-4 text-slate-500" />
+              <Icon className="w-4 h-4 text-slate-500 dark:text-slate-400" />
               <span>{link.label}</span>
             </NavLink>
           );
         })}
       </div>
 
-      <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200/80 text-xs space-y-1.5">
+      <div className="p-3.5 bg-slate-50 dark:bg-[#0b0f19] rounded-xl border border-slate-200/80 dark:border-slate-800 text-xs space-y-1.5 transition-colors">
         <div className="flex items-center gap-2 text-theme-primary font-semibold">
           <span className="w-2 h-2 rounded-full bg-theme-primary animate-pulse"></span>
           EVM Registry Live
         </div>
-        <p className="text-slate-400 text-[11px] font-mono">Hardhat Local &bull; 31337</p>
+        <p className="text-slate-400 dark:text-slate-500 text-[11px] font-mono">Hardhat Local &bull; 31337</p>
       </div>
     </aside>
   );

@@ -3,6 +3,7 @@ import { useParams, useNavigate } from 'react-router-dom';
 import api from '../services/api';
 import { getStoredCredentials } from '../services/mockStore';
 import type { VerificationResult } from '../types';
+import { Navbar } from '../components/Navbar';
 import { 
   CheckCircle2, XCircle, AlertTriangle, Search, 
   Upload, QrCode, Download, Copy, Check, Shield, FileCheck
@@ -149,106 +150,111 @@ export const VerificationPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-slate-50 text-slate-900 py-12 px-4 sm:px-6">
-      <div className="max-w-2xl mx-auto space-y-6">
-        
-        {/* Header */}
-        <div className="text-center space-y-2">
-          <div className="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold px-3 py-1 rounded-full">
-            <Shield className="w-3.5 h-3.5 text-emerald-600" />
-            Public Verification Portal
-          </div>
-          <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 tracking-tight">
-            Verify Credential Authenticity
-          </h1>
-          <p className="text-xs sm:text-sm text-slate-500 max-w-md mx-auto">
-            Zero account required. Verify authentic cryptographic signatures anchored on the blockchain.
-          </p>
-        </div>
+    <div className="min-h-screen bg-slate-50 dark:bg-[#090d16] text-slate-900 dark:text-slate-100 flex flex-col font-sans transition-colors duration-200">
+      
+      {/* Top Navigation */}
+      <Navbar />
 
-        {/* Query Input Card */}
-        <div className="bg-white rounded-2xl border border-slate-200 p-6 shadow-xs">
-          <div className="flex border-b border-slate-100 pb-3 mb-4 gap-4">
-            <button
-              onClick={() => setActiveTab('id')}
-              className={`text-xs font-semibold pb-1.5 transition-colors cursor-pointer ${
-                activeTab === 'id' ? 'border-b-2 border-emerald-600 text-emerald-600' : 'text-slate-400 hover:text-slate-700'
-              }`}
-            >
-              Verify by Credential ID
-            </button>
-            <button
-              onClick={() => setActiveTab('file')}
-              className={`text-xs font-semibold pb-1.5 transition-colors cursor-pointer ${
-                activeTab === 'file' ? 'border-b-2 border-emerald-600 text-emerald-600' : 'text-slate-400 hover:text-slate-700'
-              }`}
-            >
-              Verify File Integrity (Tamper Check)
-            </button>
-          </div>
-
-          {activeTab === 'id' ? (
-            <form onSubmit={handleSearchSubmit} className="flex gap-2">
-              <div className="relative flex-1">
-                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
-                <input
-                  type="text"
-                  placeholder="e.g. SKILL-2026-ML01"
-                  value={credentialId}
-                  onChange={(e) => setCredentialId(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-900 focus:outline-none focus:border-emerald-600 font-mono"
-                />
-              </div>
-              <button
-                type="submit"
-                disabled={loading}
-                className="bg-emerald-600 hover:bg-emerald-700 text-white font-semibold text-xs px-5 py-2 rounded-xl transition-colors cursor-pointer disabled:opacity-50 flex items-center gap-1.5"
-              >
-                {loading ? <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span> : 'Verify'}
-              </button>
-            </form>
-          ) : (
-            <div className="space-y-4">
-              <div>
-                <label className="block text-xs font-medium text-slate-700 mb-1">Target Credential ID</label>
-                <input
-                  type="text"
-                  placeholder="SKILL-2026-ML01"
-                  value={credentialId}
-                  onChange={(e) => setCredentialId(e.target.value)}
-                  className="w-full bg-slate-50 border border-slate-200 rounded-xl px-3 py-2 text-xs text-slate-900 font-mono"
-                />
-              </div>
-              <div className="border-2 border-dashed border-slate-200 rounded-xl p-6 text-center bg-slate-50/50">
-                <Upload className="w-8 h-8 text-slate-400 mx-auto mb-2" />
-                <p className="text-xs text-slate-800 font-semibold">Upload PDF to verify byte integrity</p>
-                <p className="text-[11px] text-slate-500 mt-0.5">Calculates document SHA-256 and compares to on-chain hash</p>
-                <label className="mt-3 inline-block cursor-pointer bg-white hover:bg-slate-50 border border-slate-200 text-slate-800 text-xs font-semibold px-4 py-2 rounded-lg transition-colors shadow-xs">
-                  {uploadLoading ? 'Computing hash...' : 'Choose Certificate PDF'}
-                  <input type="file" accept=".pdf" onChange={handleFileUpload} className="hidden" disabled={uploadLoading} />
-                </label>
-              </div>
+      <main className="flex-1 py-12 px-4 sm:px-6">
+        <div className="max-w-2xl mx-auto space-y-6">
+          
+          {/* Header */}
+          <div className="text-center space-y-2">
+            <div className="inline-flex items-center gap-1.5 bg-theme-light border border-theme-border text-theme-primary text-xs font-semibold px-3 py-1 rounded-full transition-all">
+              <Shield className="w-3.5 h-3.5 text-theme-primary" />
+              Public Verification Portal
             </div>
-          )}
-        </div>
+            <h1 className="text-2xl sm:text-3xl font-extrabold text-slate-900 dark:text-white tracking-tight">
+              Verify Credential Authenticity
+            </h1>
+            <p className="text-xs sm:text-sm text-slate-500 dark:text-slate-400 max-w-md mx-auto">
+              Zero account required. Verify authentic cryptographic signatures anchored on the blockchain.
+            </p>
+          </div>
+
+          {/* Query Input Card */}
+          <div className="bg-white dark:bg-[#111827] rounded-2xl border border-slate-200 dark:border-slate-800 p-6 shadow-xs transition-colors">
+            <div className="flex border-b border-slate-100 dark:border-slate-800 pb-3 mb-4 gap-4">
+              <button
+                onClick={() => setActiveTab('id')}
+                className={`text-xs font-semibold pb-1.5 transition-colors cursor-pointer ${
+                  activeTab === 'id' ? 'border-b-2 border-theme-primary text-theme-primary' : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+                }`}
+              >
+                Verify by Credential ID
+              </button>
+              <button
+                onClick={() => setActiveTab('file')}
+                className={`text-xs font-semibold pb-1.5 transition-colors cursor-pointer ${
+                  activeTab === 'file' ? 'border-b-2 border-theme-primary text-theme-primary' : 'text-slate-400 dark:text-slate-500 hover:text-slate-700 dark:hover:text-slate-300'
+                }`}
+              >
+                Verify File Integrity (Tamper Check)
+              </button>
+            </div>
+
+            {activeTab === 'id' ? (
+              <form onSubmit={handleSearchSubmit} className="flex gap-2">
+                <div className="relative flex-1">
+                  <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
+                  <input
+                    type="text"
+                    placeholder="e.g. SKILL-2026-ML01"
+                    value={credentialId}
+                    onChange={(e) => setCredentialId(e.target.value)}
+                    className="w-full bg-slate-50 dark:bg-[#0b0f19] border border-slate-200 dark:border-slate-700 rounded-xl pl-9 pr-3 py-2 text-xs text-slate-900 dark:text-white focus:outline-none focus:border-theme-primary font-mono"
+                  />
+                </div>
+                <button
+                  type="submit"
+                  disabled={loading}
+                  className="bg-theme-primary hover:bg-theme-hover text-white font-semibold text-xs px-5 py-2 rounded-xl transition-colors cursor-pointer disabled:opacity-50 flex items-center gap-1.5 shadow-xs"
+                >
+                  {loading ? <span className="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span> : 'Verify'}
+                </button>
+              </form>
+            ) : (
+              <div className="space-y-4">
+                <div>
+                  <label className="block text-xs font-medium text-slate-700 dark:text-slate-300 mb-1">Target Credential ID</label>
+                  <input
+                    type="text"
+                    placeholder="SKILL-2026-ML01"
+                    value={credentialId}
+                    onChange={(e) => setCredentialId(e.target.value)}
+                    className="w-full bg-slate-50 dark:bg-[#0b0f19] border border-slate-200 dark:border-slate-700 rounded-xl px-3 py-2 text-xs text-slate-900 dark:text-white font-mono focus:outline-none focus:border-theme-primary"
+                  />
+                </div>
+                <div className="border-2 border-dashed border-slate-200 dark:border-slate-700 rounded-xl p-6 text-center bg-slate-50/50 dark:bg-slate-800/30">
+                  <Upload className="w-8 h-8 text-slate-400 mx-auto mb-2" />
+                  <p className="text-xs text-slate-800 dark:text-slate-200 font-semibold">Upload PDF to verify byte integrity</p>
+                  <p className="text-[11px] text-slate-500 dark:text-slate-400 mt-0.5">Calculates document SHA-256 and compares to on-chain hash</p>
+                  <label className="mt-3 inline-block cursor-pointer bg-white dark:bg-slate-800 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 text-slate-800 dark:text-slate-200 text-xs font-semibold px-4 py-2 rounded-lg transition-colors shadow-xs">
+                    {uploadLoading ? 'Computing hash...' : 'Choose Certificate PDF'}
+                    <input type="file" accept=".pdf" onChange={handleFileUpload} className="hidden" disabled={uploadLoading} />
+                  </label>
+                </div>
+              </div>
+            )}
+          </div>
 
         {/* Verification Result Card */}
         {result && (
-          <div className="bg-white rounded-2xl border border-slate-200 overflow-hidden shadow-xs">
+          <div className="bg-white dark:bg-[#111827] rounded-2xl border border-slate-200 dark:border-slate-800 overflow-hidden shadow-xs transition-colors">
             
             {/* Status Header */}
             <div className={`p-5 border-b flex items-center justify-between ${
               result.status === 'AUTHENTIC'
-                ? 'bg-emerald-50 border-emerald-100 text-emerald-800'
+                ? 'bg-emerald-50 dark:bg-emerald-950/40 border-emerald-100 dark:border-emerald-900/60 text-emerald-800 dark:text-emerald-300'
                 : result.status === 'REVOKED'
-                ? 'bg-amber-50 border-amber-100 text-amber-800'
-                : 'bg-rose-50 border-rose-100 text-rose-800'
+                ? 'bg-amber-50 dark:bg-amber-950/40 border-amber-100 dark:border-amber-900/60 text-amber-800 dark:text-amber-300'
+                : 'bg-rose-50 dark:bg-rose-950/40 border-rose-100 dark:border-rose-900/60 text-rose-800 dark:text-rose-300'
             }`}>
               <div className="flex items-center gap-3">
-                {result.status === 'AUTHENTIC' && <CheckCircle2 className="w-6 h-6 text-emerald-600 shrink-0" />}
-                {result.status === 'REVOKED' && <AlertTriangle className="w-6 h-6 text-amber-600 shrink-0" />}
-                {result.status === 'HASH_MISMATCH' && <XCircle className="w-6 h-6 text-rose-600 shrink-0" />}
-                {result.status === 'NOT_FOUND' && <XCircle className="w-6 h-6 text-rose-600 shrink-0" />}
+                {result.status === 'AUTHENTIC' && <CheckCircle2 className="w-6 h-6 text-emerald-600 dark:text-emerald-400 shrink-0" />}
+                {result.status === 'REVOKED' && <AlertTriangle className="w-6 h-6 text-amber-600 dark:text-amber-400 shrink-0" />}
+                {result.status === 'HASH_MISMATCH' && <XCircle className="w-6 h-6 text-rose-600 dark:text-rose-400 shrink-0" />}
+                {result.status === 'NOT_FOUND' && <XCircle className="w-6 h-6 text-rose-600 dark:text-rose-400 shrink-0" />}
 
                 <div>
                   <h2 className="text-xs font-mono font-bold uppercase tracking-wider">
@@ -257,16 +263,16 @@ export const VerificationPage: React.FC = () => {
                     {result.status === 'HASH_MISMATCH' && '✕ DOCUMENT INTEGRITY FAILED'}
                     {result.status === 'NOT_FOUND' && '✕ CREDENTIAL NOT FOUND'}
                   </h2>
-                  <p className="text-xs text-slate-600 mt-0.5">{result.message}</p>
+                  <p className="text-xs text-slate-600 dark:text-slate-300 mt-0.5">{result.message}</p>
                 </div>
               </div>
 
               {result.is_valid && (
                 <button
                   onClick={copyShareLink}
-                  className="px-3 py-1.5 rounded-lg bg-white text-xs font-medium text-slate-700 hover:bg-slate-50 border border-slate-200 flex items-center gap-1.5 cursor-pointer shadow-xs"
+                  className="px-3 py-1.5 rounded-lg bg-white dark:bg-slate-800 text-xs font-medium text-slate-700 dark:text-slate-200 hover:bg-slate-50 dark:hover:bg-slate-700 border border-slate-200 dark:border-slate-700 flex items-center gap-1.5 cursor-pointer shadow-xs transition-colors"
                 >
-                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5" />}
+                  {copied ? <Check className="w-3.5 h-3.5 text-emerald-600 dark:text-emerald-400" /> : <Copy className="w-3.5 h-3.5" />}
                   <span>{copied ? 'Copied' : 'Share'}</span>
                 </button>
               )}
@@ -277,55 +283,55 @@ export const VerificationPage: React.FC = () => {
               <div className="p-6 space-y-5 text-xs">
                 <div>
                   <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Title</span>
-                  <p className="text-base font-bold text-slate-900 mt-0.5">{result.title}</p>
+                  <p className="text-base font-bold text-slate-900 dark:text-white mt-0.5">{result.title}</p>
                 </div>
 
-                <div className="grid grid-cols-2 gap-4 pb-4 border-b border-slate-100">
+                <div className="grid grid-cols-2 gap-4 pb-4 border-b border-slate-100 dark:border-slate-800">
                   <div>
                     <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Recipient</span>
-                    <p className="font-semibold text-slate-900">{result.student_name}</p>
+                    <p className="font-semibold text-slate-900 dark:text-white">{result.student_name}</p>
                   </div>
                   <div>
                     <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Issued By</span>
-                    <p className="font-semibold text-slate-900">{result.institution_name}</p>
+                    <p className="font-semibold text-slate-900 dark:text-white">{result.institution_name}</p>
                   </div>
                   <div>
                     <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Issue Date</span>
-                    <p className="font-mono text-slate-700">
+                    <p className="font-mono text-slate-700 dark:text-slate-300">
                       {result.issue_date ? new Date(result.issue_date).toLocaleDateString() : 'N/A'}
                     </p>
                   </div>
                   <div>
                     <span className="text-[10px] font-mono text-slate-400 uppercase tracking-wider">Blockchain Status</span>
-                    <p className="font-mono text-emerald-700 font-semibold">✓ Confirmed On-Chain</p>
+                    <p className="font-mono text-emerald-600 dark:text-emerald-400 font-semibold">✓ Confirmed On-Chain</p>
                   </div>
                 </div>
 
                 {/* Cryptographic Technical Details */}
-                <div className="bg-slate-50 p-4 rounded-xl border border-slate-100 font-mono text-[11px] space-y-2">
+                <div className="bg-slate-50 dark:bg-[#0b0f19] p-4 rounded-xl border border-slate-100 dark:border-slate-800 font-mono text-[11px] space-y-2">
                   <div>
                     <span className="text-slate-400 block text-[10px]">REGISTERED SHA-256 HASH</span>
-                    <span className="text-emerald-700 font-medium break-all select-all">{result.certificate_hash}</span>
+                    <span className="text-emerald-600 dark:text-emerald-400 font-medium break-all select-all">{result.certificate_hash}</span>
                   </div>
 
                   {result.submitted_file_hash && (
                     <div>
                       <span className="text-slate-400 block text-[10px]">SUBMITTED FILE HASH</span>
-                      <span className="text-rose-700 font-medium break-all select-all">{result.submitted_file_hash}</span>
+                      <span className="text-rose-600 dark:text-rose-400 font-medium break-all select-all">{result.submitted_file_hash}</span>
                     </div>
                   )}
 
                   <div>
                     <span className="text-slate-400 block text-[10px]">TRANSACTION REFERENCE</span>
-                    <span className="text-slate-600 break-all">{result.blockchain_tx}</span>
+                    <span className="text-slate-600 dark:text-slate-400 break-all">{result.blockchain_tx}</span>
                   </div>
                 </div>
 
                 {/* Revocation Information */}
                 {result.is_revoked && (
-                  <div className="p-4 bg-amber-50 border border-amber-200 rounded-xl text-xs space-y-1">
-                    <p className="font-bold text-amber-800">Official Revocation Notice:</p>
-                    <p className="text-amber-900">{result.revocation_reason}</p>
+                  <div className="p-4 bg-amber-50 dark:bg-amber-950/40 border border-amber-200 dark:border-amber-900/60 rounded-xl text-xs space-y-1">
+                    <p className="font-bold text-amber-800 dark:text-amber-300">Official Revocation Notice:</p>
+                    <p className="text-amber-900 dark:text-amber-200">{result.revocation_reason}</p>
                   </div>
                 )}
               </div>
@@ -333,7 +339,13 @@ export const VerificationPage: React.FC = () => {
           </div>
         )}
 
-      </div>
+        </div>
+      </main>
+
+      {/* Footer */}
+      <footer className="mt-auto py-6 border-t border-slate-200 dark:border-slate-800 bg-white dark:bg-[#111827] text-center text-xs text-slate-500 dark:text-slate-400 transition-colors">
+        SkillChain Public Verification Portal &bull; Cryptographic Zero-Knowledge Hash Validation
+      </footer>
     </div>
   );
 };

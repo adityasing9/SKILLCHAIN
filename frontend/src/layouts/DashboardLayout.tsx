@@ -13,17 +13,17 @@ export const DashboardLayout: React.FC<DashboardLayoutProps> = ({ role }) => {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-slate-50 flex items-center justify-center">
+      <div className="min-h-screen bg-slate-50 dark:bg-[#090d16] flex items-center justify-center transition-colors">
         <div className="flex flex-col items-center gap-2">
           <div className="w-7 h-7 border-2 border-theme-primary border-t-transparent rounded-full animate-spin"></div>
-          <p className="text-xs text-slate-500 font-medium">Verifying session...</p>
+          <p className="text-xs text-slate-500 dark:text-slate-400 font-medium">Verifying session...</p>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-slate-50 flex flex-col text-slate-900 font-sans">
+    <div className="min-h-screen bg-slate-50 dark:bg-[#090d16] flex flex-col text-slate-900 dark:text-slate-100 font-sans transition-colors duration-200">
       <Navbar />
       <div className="flex-1 flex flex-col md:flex-row">
         <Sidebar role={role} />
