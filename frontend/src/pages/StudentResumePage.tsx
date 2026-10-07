@@ -65,10 +65,10 @@ export const StudentResumePage: React.FC = () => {
             { target_skill: 'MLOps', recommended_action: 'Complete a production deployment project with automated pipelines.' }
           ],
           experience: [
-            { role: 'Student Researcher / Intern', duration: '2025 - 2026', description: 'Hands-on project work verified from uploaded document.' }
+            { role: 'Software Engineering Intern', duration: '2025 - 2026', description: 'Hands-on technical implementation verified from uploaded document.' }
           ],
           projects: [
-            { title: 'Academic Project Portfolio', tech_stack: 'Full Stack & AI', highlight: 'Demonstrates end-to-end implementation.' }
+            { title: 'Distributed Systems & AI Portfolio', tech_stack: 'Full Stack & AI', highlight: 'Demonstrates end-to-end implementation.' }
           ],
           recommendations: []
         });

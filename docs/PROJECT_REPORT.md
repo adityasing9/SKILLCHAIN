@@ -1,4 +1,4 @@
-# SkillChain Mini-Project Academic Report
+# SkillChain Technical Architecture & System Report
 
 ## Chapter 1: Introduction
 Credential misrepresentation and fraudulent certifications pose major challenges to modern hiring pipelines and higher education. **SkillChain** addresses this problem by combining an immutable Ethereum Virtual Machine (EVM) blockchain trust registry with an automated AI Skill Intelligence engine.

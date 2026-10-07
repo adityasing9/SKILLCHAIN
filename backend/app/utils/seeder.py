@@ -14,7 +14,7 @@ from app.blockchain.blockchain_service import blockchain_service
 
 def seed_database(db: Session):
     """
-    Seeds comprehensive realistic demo data for college mini-project evaluators:
+    Seeds comprehensive realistic demo data for platform verification and testing:
     1. Admin Account (admin@skillchain.edu)
     2. Apex Institute of Technology (apex@skillchain.edu)
     3. 3 Students:

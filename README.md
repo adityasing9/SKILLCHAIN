@@ -160,7 +160,7 @@ Open **`http://localhost:5173`** in your browser.
 
 ---
 
-## 5. Live Demonstration Checklist (Faculty & Judge Evaluation)
+## 5. Live Demonstration Walkthrough & Feature Verification
 
 | Demo Phase | Action | System Output |
 | :--- | :--- | :--- |

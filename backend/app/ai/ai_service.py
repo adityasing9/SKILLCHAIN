@@ -110,7 +110,7 @@ class AISkillIntelligenceEngine:
 
         if not experiences:
             experiences = [
-                {"role": "Engineering Student / Developer", "duration": "2024 - Present", "description": "Academic coursework and practical application development"}
+                {"role": "Associate Software Engineer / Developer", "duration": "2024 - Present", "description": "Software engineering fundamentals and practical application development"}
             ]
 
         # Extract projects
