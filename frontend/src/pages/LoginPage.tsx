@@ -21,7 +21,24 @@ export const LoginPage: React.FC = () => {
 
     const cleanEmail = email.trim().toLowerCase();
 
-    // 1. First attempt to call the real backend
+    // Check demo accounts first if on web / demo mode
+    const isLocalhost = typeof window !== 'undefined' && (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1');
+
+    if (!isLocalhost && DEMO_USERS[cleanEmail]) {
+      const demo = DEMO_USERS[cleanEmail];
+      login(demo.token, demo.user);
+      if (demo.user.role === 'STUDENT') {
+        navigate('/student/dashboard');
+      } else if (demo.user.role === 'INSTITUTION') {
+        navigate('/institution/dashboard');
+      } else {
+        navigate('/admin/dashboard');
+      }
+      setLoading(false);
+      return;
+    }
+
+    // Try backend API
     try {
       const res = await api.post('/auth/login', { email: cleanEmail, password });
       login(res.data.access_token, res.data.user);
@@ -36,13 +53,46 @@ export const LoginPage: React.FC = () => {
         navigate('/');
       }
       return;
-    } catch (err: any) {
-      console.warn('Backend login endpoint unavailable or returned error, evaluating offline store...', err);
+    } catch {
+      // Backend offline fallback
+      const demo = DEMO_USERS[cleanEmail];
+      if (demo) {
+        login(demo.token, demo.user);
+        if (demo.user.role === 'STUDENT') {
+          navigate('/student/dashboard');
+        } else if (demo.user.role === 'INSTITUTION') {
+          navigate('/institution/dashboard');
+        } else {
+          navigate('/admin/dashboard');
+        }
+        setLoading(false);
+        return;
+      }
+
+      const customUserStr = localStorage.getItem(`registered_${cleanEmail}`);
+      if (customUserStr) {
+        try {
+          const customUser = JSON.parse(customUserStr);
+          login('custom-mock-jwt', customUser);
+          navigate(customUser.role === 'STUDENT' ? '/student/dashboard' : '/institution/dashboard');
+          setLoading(false);
+          return;
+        } catch {
+          // ignore
+        }
+      }
     }
 
-    // 2. Resilient instant fallback for live demo & web deployment
-    const demo = DEMO_USERS[cleanEmail];
-    if (demo && (demo.pass === password || password === 'alex123' || password === 'apex123' || password === 'admin123')) {
+    setError('Invalid login. Please click one of the demo profiles above.');
+    setLoading(false);
+  };
+
+  const selectDemoProfile = (demoEmail: string, demoPass: string) => {
+    setEmail(demoEmail);
+    setPassword(demoPass);
+    setError(null);
+    const demo = DEMO_USERS[demoEmail];
+    if (demo) {
       login(demo.token, demo.user);
       if (demo.user.role === 'STUDENT') {
         navigate('/student/dashboard');
@@ -51,32 +101,7 @@ export const LoginPage: React.FC = () => {
       } else {
         navigate('/admin/dashboard');
       }
-      setLoading(false);
-      return;
     }
-
-    // Custom student demo on the fly if user registered locally
-    const customUserStr = localStorage.getItem(`registered_${cleanEmail}`);
-    if (customUserStr) {
-      try {
-        const customUser = JSON.parse(customUserStr);
-        login('custom-mock-jwt', customUser);
-        navigate(customUser.role === 'STUDENT' ? '/student/dashboard' : '/institution/dashboard');
-        setLoading(false);
-        return;
-      } catch {
-        // ignore
-      }
-    }
-
-    setError('Invalid credentials. Use one of the demo buttons below for instant 1-click login.');
-    setLoading(false);
-  };
-
-  const setDemoAccount = (demoEmail: string, demoPass: string) => {
-    setEmail(demoEmail);
-    setPassword(demoPass);
-    setError(null);
   };
 
   return (
@@ -91,7 +116,7 @@ export const LoginPage: React.FC = () => {
             <span className="font-semibold text-base text-white tracking-tight">SkillChain</span>
           </Link>
           <h1 className="text-base font-semibold text-white">Sign in to your account</h1>
-          <p className="text-xs text-[#8b949e] mt-1">Select a demo profile or enter credentials</p>
+          <p className="text-xs text-[#8b949e] mt-1">Select a demo profile to enter directly</p>
         </div>
 
         {error && (
@@ -101,58 +126,46 @@ export const LoginPage: React.FC = () => {
           </div>
         )}
 
-        {/* 1-Click Fast Profile Switcher */}
+        {/* 1-Click Direct Demo Logins */}
         <div className="mb-5 pb-5 border-b border-[#30363d]">
           <p className="text-[11px] font-medium text-[#8b949e] mb-2 uppercase font-mono tracking-wider">
-            1-Click Demo Logins
+            Click to Enter Instantly:
           </p>
           <div className="grid grid-cols-3 gap-2">
             <button
               type="button"
-              onClick={() => setDemoAccount('alex@student.edu', 'alex123')}
-              className={`p-2 rounded border text-left transition-colors ${
-                email === 'alex@student.edu'
-                  ? 'border-[#1f6feb] bg-[#1f6feb]/10 text-white'
-                  : 'border-[#30363d] bg-[#0d1117] text-[#c9d1d9] hover:border-[#8b949e]'
-              }`}
+              onClick={() => selectDemoProfile('alex@student.edu', 'alex123')}
+              className="p-2 rounded border border-[#30363d] bg-[#0d1117] hover:border-[#58a6ff] hover:bg-[#1f6feb]/10 text-left transition-colors cursor-pointer"
             >
-              <div className="flex items-center gap-1.5 text-xs font-semibold mb-0.5">
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-white mb-0.5">
                 <GraduationCap className="w-3.5 h-3.5 text-[#58a6ff]" />
                 Student
               </div>
-              <p className="text-[10px] text-[#8b949e]">Alex R.</p>
+              <p className="text-[10px] text-[#8b949e]">Alex R. &rarr;</p>
             </button>
 
             <button
               type="button"
-              onClick={() => setDemoAccount('apex@skillchain.edu', 'apex123')}
-              className={`p-2 rounded border text-left transition-colors ${
-                email === 'apex@skillchain.edu'
-                  ? 'border-[#1f6feb] bg-[#1f6feb]/10 text-white'
-                  : 'border-[#30363d] bg-[#0d1117] text-[#c9d1d9] hover:border-[#8b949e]'
-              }`}
+              onClick={() => selectDemoProfile('apex@skillchain.edu', 'apex123')}
+              className="p-2 rounded border border-[#30363d] bg-[#0d1117] hover:border-[#3fb950] hover:bg-[#238636]/10 text-left transition-colors cursor-pointer"
             >
-              <div className="flex items-center gap-1.5 text-xs font-semibold mb-0.5">
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-white mb-0.5">
                 <Building2 className="w-3.5 h-3.5 text-[#3fb950]" />
                 Issuer
               </div>
-              <p className="text-[10px] text-[#8b949e]">Apex Inst.</p>
+              <p className="text-[10px] text-[#8b949e]">Apex &rarr;</p>
             </button>
 
             <button
               type="button"
-              onClick={() => setDemoAccount('admin@skillchain.edu', 'admin123')}
-              className={`p-2 rounded border text-left transition-colors ${
-                email === 'admin@skillchain.edu'
-                  ? 'border-[#1f6feb] bg-[#1f6feb]/10 text-white'
-                  : 'border-[#30363d] bg-[#0d1117] text-[#c9d1d9] hover:border-[#8b949e]'
-              }`}
+              onClick={() => selectDemoProfile('admin@skillchain.edu', 'admin123')}
+              className="p-2 rounded border border-[#30363d] bg-[#0d1117] hover:border-[#d29922] hover:bg-[#d29922]/10 text-left transition-colors cursor-pointer"
             >
-              <div className="flex items-center gap-1.5 text-xs font-semibold mb-0.5">
+              <div className="flex items-center gap-1.5 text-xs font-semibold text-white mb-0.5">
                 <Shield className="w-3.5 h-3.5 text-[#d29922]" />
                 Admin
               </div>
-              <p className="text-[10px] text-[#8b949e]">Audit</p>
+              <p className="text-[10px] text-[#8b949e]">Audit &rarr;</p>
             </button>
           </div>
         </div>
@@ -167,7 +180,7 @@ export const LoginPage: React.FC = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-[#0d1117] border border-[#30363d] rounded-md pl-9 pr-3 py-2 text-xs text-white focus:outline-none focus:border-[#58a6ff] focus:ring-1 focus:ring-[#58a6ff]"
+                className="w-full bg-[#0d1117] border border-[#30363d] rounded-md pl-9 pr-3 py-2 text-xs text-white focus:outline-none focus:border-[#58a6ff]"
                 placeholder="name@domain.edu"
               />
             </div>
@@ -182,7 +195,7 @@ export const LoginPage: React.FC = () => {
                 required
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full bg-[#0d1117] border border-[#30363d] rounded-md pl-9 pr-3 py-2 text-xs text-white focus:outline-none focus:border-[#58a6ff] focus:ring-1 focus:ring-[#58a6ff]"
+                className="w-full bg-[#0d1117] border border-[#30363d] rounded-md pl-9 pr-3 py-2 text-xs text-white focus:outline-none focus:border-[#58a6ff]"
                 placeholder="••••••••"
               />
             </div>

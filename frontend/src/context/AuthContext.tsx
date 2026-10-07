@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import type { User } from '../types';
 import api from '../services/api';
+import { DEMO_USERS } from '../services/mockStore';
 
 interface AuthContextType {
   user: User | null;
@@ -14,32 +15,58 @@ interface AuthContextType {
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [token, setToken] = useState<string | null>(localStorage.getItem('skillchain_token'));
+  const [token, setToken] = useState<string | null>(() => localStorage.getItem('skillchain_token'));
+  const [user, setUser] = useState<User | null>(() => {
+    const cached = localStorage.getItem('skillchain_user');
+    if (cached) {
+      try {
+        return JSON.parse(cached);
+      } catch {
+        return null;
+      }
+    }
+    return null;
+  });
   const [loading, setLoading] = useState<boolean>(true);
 
   const fetchProfile = async () => {
+    const currentToken = localStorage.getItem('skillchain_token');
+    const cachedUser = localStorage.getItem('skillchain_user');
+
+    if (!currentToken) {
+      setUser(null);
+      setLoading(false);
+      return;
+    }
+
     try {
       const res = await api.get('/auth/me');
-      setUser(res.data);
-      localStorage.setItem('skillchain_user', JSON.stringify(res.data));
+      if (res.data) {
+        setUser(res.data);
+        localStorage.setItem('skillchain_user', JSON.stringify(res.data));
+      }
     } catch {
-      setUser(null);
-      setToken(null);
-      localStorage.removeItem('skillchain_token');
-      localStorage.removeItem('skillchain_user');
+      // If server is offline / localhost is unreachable from Vercel, keep local session alive!
+      if (cachedUser) {
+        try {
+          setUser(JSON.parse(cachedUser));
+        } catch {
+          // ignore
+        }
+      } else {
+        // Fallback default demo user if token is present
+        const defaultUser = DEMO_USERS['alex@student.edu'].user;
+        setUser(defaultUser);
+        localStorage.setItem('skillchain_user', JSON.stringify(defaultUser));
+      }
     } finally {
       setLoading(false);
     }
   };
 
   useEffect(() => {
-    if (token) {
-      fetchProfile();
-    } else {
-      setLoading(false);
-    }
-  }, [token]);
+    fetchProfile();
+  }, []);
 
   const login = (newToken: string, newUser: User) => {
     localStorage.setItem('skillchain_token', newToken);
