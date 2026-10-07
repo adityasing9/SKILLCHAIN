@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { 
   Shield, CheckCircle2, ArrowRight, Search, 
-  ExternalLink, FileCheck, Layers, Hash
+  Lock, Award, Users, Zap, Check, ChevronRight, FileCheck, Layers
 } from 'lucide-react';
 
 export const LandingPage: React.FC = () => {
@@ -17,159 +17,179 @@ export const LandingPage: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#0d1117] text-[#c9d1d9] flex flex-col font-sans">
+    <div className="min-h-screen bg-slate-50 text-slate-900 flex flex-col font-sans selection:bg-emerald-100 selection:text-emerald-900">
       
-      {/* Top Bar Header */}
-      <nav className="border-b border-[#30363d] bg-[#161b22] px-4 py-3">
-        <div className="max-w-6xl mx-auto flex items-center justify-between">
-          <div className="flex items-center gap-2">
-            <div className="w-7 h-7 rounded bg-[#238636] flex items-center justify-center text-white">
-              <Shield className="w-4 h-4" />
+      {/* Top Navbar */}
+      <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-xs border-b border-slate-200">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+          <Link to="/" className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-emerald-600 flex items-center justify-center text-white shadow-xs">
+              <Shield className="w-4 h-4 text-white" />
             </div>
-            <span className="font-semibold text-sm text-white tracking-tight">SkillChain</span>
-            <span className="text-[10px] font-mono text-[#8b949e] border border-[#30363d] px-1.5 py-0.5 rounded bg-[#0d1117]">
-              Credential Verification
-            </span>
-          </div>
-          <div className="flex items-center gap-2">
-            <Link to="/verify" className="text-xs text-[#c9d1d9] hover:text-white px-2.5 py-1.5 rounded hover:bg-[#21262d]">
-              Verify
+            <span className="font-bold text-lg text-slate-900 tracking-tight">SkillChain</span>
+          </Link>
+          <div className="flex items-center gap-3 sm:gap-6">
+            <Link to="/" className="text-sm font-medium text-slate-600 hover:text-slate-900">Home</Link>
+            <Link to="/about" className="text-sm font-medium text-slate-600 hover:text-slate-900">About</Link>
+            <Link to="/verify" className="text-sm font-medium text-slate-600 hover:text-slate-900">Verify</Link>
+            <Link to="/login" className="text-sm font-medium text-slate-700 hover:text-slate-900 px-3 py-1.5 rounded-lg border border-slate-200 hover:bg-slate-50">
+              Login
             </Link>
-            <Link to="/login" className="text-xs text-[#c9d1d9] hover:text-white px-2.5 py-1.5 rounded hover:bg-[#21262d]">
-              Sign in
-            </Link>
-            <Link to="/register" className="text-xs bg-[#238636] hover:bg-[#2ea043] text-white px-3 py-1.5 rounded font-medium">
+            <Link to="/register" className="text-sm font-medium text-white bg-emerald-600 hover:bg-emerald-700 px-4 py-2 rounded-lg shadow-xs">
               Get Started
             </Link>
           </div>
         </div>
-      </nav>
+      </header>
 
       {/* Hero Section */}
-      <section className="border-b border-[#30363d] py-16 px-4">
-        <div className="max-w-4xl mx-auto text-center space-y-4">
-          <div className="inline-flex items-center gap-1.5 text-xs text-[#8b949e] font-mono bg-[#161b22] border border-[#30363d] px-2.5 py-1 rounded">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#3fb950]"></span>
-            Cryptographic SHA-256 Proof &bull; EVM Smart Contract &bull; Zero Fake Degrees
+      <section className="pt-16 pb-20 px-4 text-center bg-gradient-to-b from-white to-slate-50 border-b border-slate-100">
+        <div className="max-w-4xl mx-auto space-y-6">
+          
+          {/* Badge */}
+          <div className="inline-flex items-center gap-1.5 bg-emerald-50 border border-emerald-200 text-emerald-800 text-xs font-semibold px-3 py-1 rounded-full">
+            <Shield className="w-3.5 h-3.5 text-emerald-600" />
+            Trusted by 100+ Educational Institutions
           </div>
 
-          <h1 className="text-3xl sm:text-4xl font-bold text-white tracking-tight leading-tight">
-            Cryptographic Credential Verification <br className="hidden sm:block" />
-            & Skill Intelligence Platform
+          <h1 className="text-4xl sm:text-6xl font-extrabold text-slate-900 tracking-tight leading-tight">
+            Smart Credential Verification <br />
+            <span className="text-emerald-600">Made Simple</span>
           </h1>
 
-          <p className="text-sm text-[#8b949e] max-w-2xl mx-auto leading-relaxed">
-            SkillChain allows educational institutions to anchor tamper-proof credential digests on the blockchain while extracting structured skill profiles from student coursework and resumes.
+          <p className="text-base sm:text-lg text-slate-600 max-w-2xl mx-auto leading-relaxed">
+            Upload, verify, and share your academic achievements with confidence. <br className="hidden sm:block" />
+            Built for students, trusted by institutions.
           </p>
 
-          {/* Quick Verification Lookup Bar */}
-          <div className="pt-4 max-w-xl mx-auto">
-            <form onSubmit={handleQuickVerify} className="flex gap-2">
+          {/* CTA Buttons */}
+          <div className="flex flex-wrap items-center justify-center gap-3 pt-2">
+            <Link
+              to="/login"
+              className="px-6 py-3 rounded-lg bg-emerald-600 hover:bg-emerald-700 text-white font-medium text-sm shadow-sm transition-all"
+            >
+              Get Started Free
+            </Link>
+            <Link
+              to="/about"
+              className="px-6 py-3 rounded-lg bg-white hover:bg-slate-50 border border-slate-200 text-slate-700 font-medium text-sm shadow-xs transition-all"
+            >
+              Learn More
+            </Link>
+          </div>
+
+          {/* Instant Search Bar */}
+          <div className="pt-6 max-w-lg mx-auto">
+            <form onSubmit={handleQuickVerify} className="flex gap-2 p-1.5 bg-white border border-slate-200 rounded-xl shadow-xs">
               <div className="relative flex-1">
-                <Search className="w-4 h-4 text-[#8b949e] absolute left-3 top-2.5" />
+                <Search className="w-4 h-4 text-slate-400 absolute left-3 top-3" />
                 <input
                   type="text"
-                  placeholder="Enter Credential ID (e.g. SKILL-2026-ML01)"
+                  placeholder="Verify Credential ID (e.g. SKILL-2026-ML01)"
                   value={quickSearchId}
                   onChange={(e) => setQuickSearchId(e.target.value)}
-                  className="w-full bg-[#161b22] border border-[#30363d] rounded-md pl-9 pr-3 py-2 text-xs text-white placeholder-[#8b949e] focus:outline-none focus:border-[#58a6ff] font-mono"
+                  className="w-full pl-9 pr-3 py-2 text-xs text-slate-800 placeholder-slate-400 focus:outline-none font-mono"
                 />
               </div>
               <button
                 type="submit"
-                className="bg-[#1f6feb] hover:bg-[#388bfd] text-white text-xs font-semibold px-4 py-2 rounded-md transition-colors flex items-center gap-1.5 shrink-0 cursor-pointer"
+                className="bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold px-4 py-2 rounded-lg transition-colors cursor-pointer"
               >
-                Verify Proof
-                <ArrowRight className="w-3.5 h-3.5" />
+                Verify
               </button>
             </form>
-
-            <div className="mt-2.5 flex items-center justify-center gap-3 text-[11px] text-[#8b949e] font-mono">
-              <span>Quick tests:</span>
-              <button onClick={() => setQuickSearchId('SKILL-2026-ML01')} className="text-[#58a6ff] hover:underline cursor-pointer">
-                SKILL-2026-ML01 (Valid)
-              </button>
-              <span>&bull;</span>
-              <button onClick={() => setQuickSearchId('SKILL-2026-REV05')} className="text-[#f85149] hover:underline cursor-pointer">
-                SKILL-2026-REV05 (Revoked)
-              </button>
+            <div className="mt-2 text-xs text-slate-500 font-mono">
+              Try demo: <button onClick={() => setQuickSearchId('SKILL-2026-ML01')} className="text-emerald-600 hover:underline cursor-pointer">SKILL-2026-ML01</button> &bull; <button onClick={() => setQuickSearchId('SKILL-2026-REV05')} className="text-rose-600 hover:underline cursor-pointer">SKILL-2026-REV05 (Revoked)</button>
             </div>
           </div>
+
         </div>
       </section>
 
-      {/* 3 Pillars Overview */}
-      <section className="py-12 px-4 border-b border-[#30363d] bg-[#161b22]/50">
-        <div className="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-3 gap-4">
-          <div className="p-4 rounded-md bg-[#161b22] border border-[#30363d]">
-            <div className="w-8 h-8 rounded bg-[#21262d] flex items-center justify-center text-[#58a6ff] mb-3">
-              <Hash className="w-4 h-4" />
-            </div>
-            <h3 className="text-sm font-semibold text-white mb-1">On-Chain Digest Only</h3>
-            <p className="text-xs text-[#8b949e] leading-relaxed">
-              No private student records or PDFs on-chain. Only minimal 256-bit SHA hashes, issuer addresses, and timestamps are recorded.
-            </p>
+      {/* Everything You Need Section (Matches image reference) */}
+      <section className="py-20 px-4 bg-sky-50/50">
+        <div className="max-w-6xl mx-auto">
+          
+          <div className="text-center mb-14 space-y-2">
+            <h2 className="text-3xl font-extrabold text-slate-900 tracking-tight">Everything You Need</h2>
+            <p className="text-sm text-slate-500">A complete platform for credential management</p>
           </div>
 
-          <div className="p-4 rounded-md bg-[#161b22] border border-[#30363d]">
-            <div className="w-8 h-8 rounded bg-[#21262d] flex items-center justify-center text-[#3fb950] mb-3">
-              <FileCheck className="w-4 h-4" />
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+            
+            {/* Card 1 */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-xs hover:shadow-md transition-shadow">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
+                <CheckCircle2 className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 mb-1.5">Instant Verification</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Get your credentials verified by faculty in minutes, not days.
+              </p>
             </div>
-            <h3 className="text-sm font-semibold text-white mb-1">Byte Tamper Detection</h3>
-            <p className="text-xs text-[#8b949e] leading-relaxed">
-              Verifiers can upload any candidate certificate. If even a single grade or letter was modified, the hash fails verification.
-            </p>
-          </div>
 
-          <div className="p-4 rounded-md bg-[#161b22] border border-[#30363d]">
-            <div className="w-8 h-8 rounded bg-[#21262d] flex items-center justify-center text-[#d29922] mb-3">
-              <Layers className="w-4 h-4" />
+            {/* Card 2 */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-xs hover:shadow-md transition-shadow">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
+                <Lock className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 mb-1.5">Blockchain Security</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                SHA-256 hashing ensures your documents are tamper-proof and immutable on-chain.
+              </p>
             </div>
-            <h3 className="text-sm font-semibold text-white mb-1">Skill Intelligence</h3>
-            <p className="text-xs text-[#8b949e] leading-relaxed">
-              Analyzes verified achievements and resumes to calculate skill confidence scores and recommend tailored career roadmaps.
-            </p>
-          </div>
-        </div>
-      </section>
 
-      {/* Practical Demonstration Matrix */}
-      <section className="py-10 px-4">
-        <div className="max-w-5xl mx-auto bg-[#161b22] rounded-md border border-[#30363d] p-5">
-          <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3 mb-4">
-            <div>
-              <h2 className="text-sm font-semibold text-white">College Mini-Project Demonstration Matrix</h2>
-              <p className="text-xs text-[#8b949e]">Built to demonstrate Solidity smart contracts, cryptographic verification, and AI parsing.</p>
+            {/* Card 3 */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-xs hover:shadow-md transition-shadow">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
+                <Award className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 mb-1.5">Digital Portfolio</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Create a beautiful, shareable portfolio of verified credentials and skills.
+              </p>
             </div>
-            <Link
-              to="/verify/SKILL-2026-ML01"
-              className="text-xs text-[#58a6ff] hover:underline flex items-center gap-1 font-medium shrink-0"
-            >
-              Open Proof Sample
-              <ExternalLink className="w-3.5 h-3.5" />
-            </Link>
-          </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-            <div className="p-3 bg-[#0d1117] rounded border border-[#30363d]">
-              <span className="font-semibold text-white block mb-0.5">1. Issue Credential</span>
-              <p className="text-[#8b949e] text-[11px]">Institution generates SHA-256 and registers on EVM.</p>
+            {/* Card 4 */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-xs hover:shadow-md transition-shadow">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
+                <Users className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 mb-1.5">Role-Based Access</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Students, faculty, and employers get customized dashboards and controls.
+              </p>
             </div>
-            <div className="p-3 bg-[#0d1117] rounded border border-[#30363d]">
-              <span className="font-semibold text-white block mb-0.5">2. Public Verify</span>
-              <p className="text-[#8b949e] text-[11px]">Zero-login lookup matching on-chain cryptographic state.</p>
+
+            {/* Card 5 */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-xs hover:shadow-md transition-shadow">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
+                <Zap className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 mb-1.5">AI Skill Intelligence</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Extracts skills from resumes and certificates with confidence scoring and career roadmaps.
+              </p>
             </div>
-            <div className="p-3 bg-[#0d1117] rounded border border-[#30363d]">
-              <span className="font-semibold text-white block mb-0.5">3. AI Resume Extraction</span>
-              <p className="text-[#8b949e] text-[11px]">Extracts skills, projects, and target career gaps.</p>
+
+            {/* Card 6 */}
+            <div className="bg-white p-6 rounded-2xl border border-slate-100 shadow-xs hover:shadow-md transition-shadow">
+              <div className="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-4">
+                <Shield className="w-5 h-5" />
+              </div>
+              <h3 className="text-base font-bold text-slate-900 mb-1.5">OWASP & EVM Compliant</h3>
+              <p className="text-xs text-slate-500 leading-relaxed">
+                Enterprise security standards keeping documents private and off-chain.
+              </p>
             </div>
+
           </div>
         </div>
       </section>
 
       {/* Footer */}
-      <footer className="mt-auto py-6 border-t border-[#30363d] bg-[#161b22] text-center text-xs text-[#8b949e]">
-        SkillChain &bull; Blockchain Credential Verification &bull; EVM Compatible &bull; GitHub
+      <footer className="mt-auto py-8 border-t border-slate-200 bg-white text-center text-xs text-slate-500">
+        SkillChain &bull; Decentralized Credential Verification Platform &bull; EVM Compatible
       </footer>
 
     </div>

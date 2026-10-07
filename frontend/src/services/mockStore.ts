@@ -136,3 +136,56 @@ export const getStoredCredentials = (): Credential[] => {
 export const saveStoredCredentials = (creds: Credential[]) => {
   localStorage.setItem('skillchain_credentials', JSON.stringify(creds));
 };
+
+export const addMockCredential = (cred: {
+  title: string;
+  description: string;
+  credential_type: string;
+  student_identifier: string;
+}): Credential => {
+  const current = getStoredCredentials();
+  const studentMap: Record<string, string> = {
+    'STU-2026-001': 'Alex Rivera',
+    'STU-2026-002': 'Sarah Chen',
+    'STU-2026-003': 'David Kumar',
+    'alex@student.edu': 'Alex Rivera',
+  };
+  const sName = studentMap[cred.student_identifier] || 'Registered Student';
+  const hexHash = Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
+  const txHash = '0x' + Array.from({ length: 64 }, () => Math.floor(Math.random() * 16).toString(16)).join('');
+  
+  const newCred: Credential = {
+    id: Date.now(),
+    credential_id: `SKILL-2026-${Math.random().toString(36).substring(2, 6).toUpperCase()}`,
+    title: cred.title,
+    description: cred.description,
+    credential_type: cred.credential_type as any,
+    issue_date: new Date().toISOString(),
+    student_name: sName,
+    student_identifier: cred.student_identifier,
+    institution_name: 'Apex Institute of Technology',
+    certificate_hash: hexHash,
+    blockchain_transaction_hash: txHash,
+    blockchain_network: 'Hardhat Localhost (ChainID: 31337)',
+    contract_address: '0x5FbDB2315678afecb367f032d93F642f64180aa3',
+    status: 'ISSUED',
+    created_at: new Date().toISOString(),
+  };
+
+  current.unshift(newCred);
+  saveStoredCredentials(current);
+  return newCred;
+};
+
+export const revokeMockCredential = (credentialId: string, reason: string): boolean => {
+  const current = getStoredCredentials();
+  const idx = current.findIndex(c => c.credential_id === credentialId);
+  if (idx !== -1) {
+    current[idx].status = 'REVOKED';
+    current[idx].revoked_at = new Date().toISOString();
+    current[idx].revocation_reason = reason;
+    saveStoredCredentials(current);
+    return true;
+  }
+  return false;
+};

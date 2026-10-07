@@ -34,11 +34,13 @@ export const Sidebar: React.FC<SidebarProps> = ({ role }) => {
   const links = role === 'STUDENT' ? studentLinks : role === 'INSTITUTION' ? institutionLinks : adminLinks;
 
   return (
-    <aside className="w-56 bg-[#161b22] border-r border-[#30363d] min-h-[calc(100vh-3.5rem)] p-3 flex flex-col justify-between shrink-0">
-      <div className="space-y-1">
-        <p className="text-[11px] font-semibold text-[#8b949e] px-2.5 py-1 mb-1 font-mono uppercase tracking-wider">
-          {role}
-        </p>
+    <aside className="w-60 bg-white border-r border-slate-200 min-h-[calc(100vh-4rem)] p-4 flex flex-col justify-between shrink-0 shadow-sm">
+      <div className="space-y-1.5">
+        <div className="px-3 py-1 mb-2">
+          <span className="text-[10px] font-bold text-slate-400 uppercase tracking-wider font-mono">
+            {role} Portal
+          </span>
+        </div>
         {links.map((link) => {
           const Icon = link.icon;
           return (
@@ -46,26 +48,26 @@ export const Sidebar: React.FC<SidebarProps> = ({ role }) => {
               key={link.to}
               to={link.to}
               className={({ isActive }) =>
-                `flex items-center gap-2.5 px-2.5 py-2 rounded-md text-xs font-medium transition-colors ${
+                `flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-xs font-medium transition-all ${
                   isActive
-                    ? 'bg-[#21262d] text-white border-l-2 border-[#1f6feb]'
-                    : 'text-[#8b949e] hover:text-[#c9d1d9] hover:bg-[#21262d]/50'
+                    ? 'bg-emerald-50 text-emerald-700 font-semibold border-l-2 border-emerald-600 shadow-xs'
+                    : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/70'
                 }`
               }
             >
-              <Icon className="w-4 h-4 text-[#8b949e]" />
+              <Icon className="w-4 h-4 text-slate-500" />
               <span>{link.label}</span>
             </NavLink>
           );
         })}
       </div>
 
-      <div className="p-2.5 bg-[#0d1117] rounded-md border border-[#30363d] text-[11px] space-y-1">
-        <div className="flex items-center gap-1.5 text-[#3fb950] font-mono">
-          <span className="w-1.5 h-1.5 rounded-full bg-[#3fb950]"></span>
-          EVM Registry Online
+      <div className="p-3.5 bg-slate-50 rounded-xl border border-slate-200/80 text-xs space-y-1.5">
+        <div className="flex items-center gap-2 text-emerald-700 font-medium">
+          <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+          EVM Registry Live
         </div>
-        <p className="text-[#8b949e] text-[10px]">ChainID: 31337</p>
+        <p className="text-slate-400 text-[11px] font-mono">Hardhat Local &bull; 31337</p>
       </div>
     </aside>
   );

@@ -39,56 +39,56 @@ export const InstitutionDashboard: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="flex items-center justify-center py-20">
-        <div className="w-6 h-6 border-2 border-[#58a6ff] border-t-transparent rounded-full animate-spin"></div>
+      <div className="flex items-center justify-center py-24">
+        <div className="w-7 h-7 border-2 border-emerald-600 border-t-transparent rounded-full animate-spin"></div>
       </div>
     );
   }
 
   return (
     <div className="space-y-6">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-3">
+      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-xl font-bold text-white tracking-tight">
+          <h1 className="text-2xl font-bold text-slate-900 tracking-tight">
             {stats?.institution_name || 'Apex Institute of Technology'}
           </h1>
-          <p className="text-xs text-[#8b949e]">
-            Reg: <span className="font-mono text-[#c9d1d9]">{stats?.registration_number}</span> &bull; Accredited Issuer
+          <p className="text-sm text-slate-500 mt-0.5">
+            Registry Code: <span className="font-mono font-semibold text-slate-700">{stats?.registration_number}</span> &bull; Accredited Issuer
           </p>
         </div>
 
         <Link
           to="/institution/issue"
-          className="px-3 py-1.5 bg-[#238636] hover:bg-[#2ea043] text-white text-xs font-medium rounded-md flex items-center gap-1.5 transition-colors"
+          className="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-semibold rounded-xl flex items-center gap-2 transition-all shadow-xs"
         >
-          <PlusCircle className="w-3.5 h-3.5" />
+          <PlusCircle className="w-4 h-4" />
           Issue Credential
         </Link>
       </div>
 
-      <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
-        <div className="bg-[#161b22] p-4 rounded-lg border border-[#30363d]">
-          <span className="text-[11px] font-mono uppercase text-[#8b949e] block mb-1">Total Issued</span>
-          <p className="text-2xl font-bold text-white">{stats?.total_issued || 0}</p>
+      <div className="grid grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
+          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block mb-1">Total Issued</span>
+          <p className="text-3xl font-extrabold text-slate-900">{stats?.total_issued || 0}</p>
         </div>
-        <div className="bg-[#161b22] p-4 rounded-lg border border-[#30363d]">
-          <span className="text-[11px] font-mono uppercase text-[#8b949e] block mb-1">Active Records</span>
-          <p className="text-2xl font-bold text-white">{stats?.active_credentials || 0}</p>
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
+          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block mb-1">Active Records</span>
+          <p className="text-3xl font-extrabold text-emerald-700">{stats?.active_credentials || 0}</p>
         </div>
-        <div className="bg-[#161b22] p-4 rounded-lg border border-[#30363d]">
-          <span className="text-[11px] font-mono uppercase text-[#8b949e] block mb-1">Revoked On-Chain</span>
-          <p className="text-2xl font-bold text-white">{stats?.revoked_credentials || 0}</p>
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
+          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block mb-1">Revoked On-Chain</span>
+          <p className="text-3xl font-extrabold text-amber-700">{stats?.revoked_credentials || 0}</p>
         </div>
-        <div className="bg-[#161b22] p-4 rounded-lg border border-[#30363d]">
-          <span className="text-[11px] font-mono uppercase text-[#8b949e] block mb-1">Enrolled Students</span>
-          <p className="text-2xl font-bold text-white">{stats?.total_students || 0}</p>
+        <div className="bg-white p-5 rounded-2xl border border-slate-200/80 shadow-xs">
+          <span className="text-xs font-semibold uppercase tracking-wider text-slate-400 block mb-1">Enrolled Students</span>
+          <p className="text-3xl font-extrabold text-slate-900">{stats?.total_students || 0}</p>
         </div>
       </div>
 
-      <div className="bg-[#161b22] rounded-lg border border-[#30363d] p-4">
-        <div className="flex items-center justify-between mb-3">
-          <h2 className="text-sm font-semibold text-white">Issued Credentials Ledger</h2>
-          <Link to="/institution/credentials" className="text-xs text-[#58a6ff] hover:underline font-medium">
+      <div className="bg-white rounded-2xl border border-slate-200/80 p-6 shadow-xs">
+        <div className="flex items-center justify-between mb-4 pb-3 border-b border-slate-100">
+          <h2 className="text-base font-bold text-slate-900">Issued Credentials Ledger</h2>
+          <Link to="/institution/credentials" className="text-xs text-emerald-700 hover:text-emerald-800 font-semibold hover:underline">
             Manage All &rarr;
           </Link>
         </div>
@@ -96,29 +96,29 @@ export const InstitutionDashboard: React.FC = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left text-xs">
             <thead>
-              <tr className="border-b border-[#30363d] text-[#8b949e] font-mono">
-                <th className="pb-2 font-normal">CREDENTIAL ID</th>
-                <th className="pb-2 font-normal">TITLE</th>
-                <th className="pb-2 font-normal">STUDENT</th>
-                <th className="pb-2 font-normal">STATUS</th>
-                <th className="pb-2 font-normal text-right">ACTION</th>
+              <tr className="border-b border-slate-100 text-slate-400 font-mono text-[11px]">
+                <th className="pb-3 font-semibold uppercase">CREDENTIAL ID</th>
+                <th className="pb-3 font-semibold uppercase">TITLE</th>
+                <th className="pb-3 font-semibold uppercase">STUDENT</th>
+                <th className="pb-3 font-semibold uppercase">STATUS</th>
+                <th className="pb-3 font-semibold uppercase text-right">ACTION</th>
               </tr>
             </thead>
-            <tbody className="divide-y divide-[#30363d]">
+            <tbody className="divide-y divide-slate-100">
               {stats?.recent_activity?.map((item: any, idx: number) => (
-                <tr key={idx} className="hover:bg-[#21262d]/50">
-                  <td className="py-2.5 font-mono text-[#58a6ff]">{item.credential_id}</td>
-                  <td className="py-2.5 text-white font-medium">{item.title}</td>
-                  <td className="py-2.5 text-[#8b949e]">{item.student_name}</td>
-                  <td className="py-2.5">
-                    <span className={`px-1.5 py-0.2 rounded text-[10px] font-mono ${
-                      item.status === 'REVOKED' ? 'bg-[#d29922]/10 text-[#d29922] border border-[#d29922]/30' : 'bg-[#238636]/10 text-[#3fb950] border border-[#238636]/30'
+                <tr key={idx} className="hover:bg-slate-50/70 transition-colors">
+                  <td className="py-3 font-mono font-medium text-emerald-700">{item.credential_id}</td>
+                  <td className="py-3 text-slate-900 font-semibold">{item.title}</td>
+                  <td className="py-3 text-slate-600">{item.student_name}</td>
+                  <td className="py-3">
+                    <span className={`px-2 py-0.5 rounded-full text-[10px] font-semibold ${
+                      item.status === 'REVOKED' ? 'bg-amber-50 text-amber-700 border border-amber-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200'
                     }`}>
                       {item.status}
                     </span>
                   </td>
-                  <td className="py-2.5 text-right">
-                    <Link to={`/verify/${item.credential_id}`} className="text-[#58a6ff] hover:underline font-mono">
+                  <td className="py-3 text-right">
+                    <Link to={`/verify/${item.credential_id}`} className="text-emerald-700 hover:text-emerald-800 font-semibold hover:underline">
                       Verify &rarr;
                     </Link>
                   </td>
