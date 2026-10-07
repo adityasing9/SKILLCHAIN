@@ -1,0 +1,49 @@
+# Dependencies
+node_modules/
+.pnp
+.pnp.js
+
+# Testing & Coverage
+coverage/
+.nyc_output/
+
+# Build artifacts
+dist/
+build/
+artifacts/
+cache/
+
+# Python & Environment
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.env
+.venv
+env/
+venv/
+ENV/
+env.bak/
+venv.bak/
+
+# SQLite & local DB
+*.sqlite3
+*.db
+backend/skillchain.db
+
+# Uploads
+backend/uploads/certificates/*
+backend/uploads/resumes/*
+!backend/uploads/certificates/.gitkeep
+!backend/uploads/resumes/.gitkeep
+
+# Hardhat
+typechain/
+typechain-types/
+
+# IDE & OS
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/
+*.log
