@@ -11,7 +11,11 @@ export const StudentSkillsPage: React.FC = () => {
     const fetchSkills = async () => {
       try {
         const res = await api.get('/ai/skills');
-        setSkills(res.data);
+        if (Array.isArray(res.data)) {
+          setSkills(res.data);
+          return;
+        }
+        throw new Error('Not an array');
       } catch {
         setSkills([
           { id: 1, skill_name: 'Python', category: 'Programming', confidence_score: 0.94, confidence_percentage: 94, source: 'VERIFIED_CREDENTIAL' },

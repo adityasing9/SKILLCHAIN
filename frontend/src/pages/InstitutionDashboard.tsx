@@ -12,7 +12,11 @@ export const InstitutionDashboard: React.FC = () => {
     const fetchStats = async () => {
       try {
         const res = await api.get('/institutions/dashboard-stats');
-        setStats(res.data);
+        if (res.data && typeof res.data === 'object' && !Array.isArray(res.data) && res.data.total_issued !== undefined) {
+          setStats(res.data);
+          return;
+        }
+        throw new Error('Invalid payload');
       } catch {
         const creds = getStoredCredentials();
         setStats({

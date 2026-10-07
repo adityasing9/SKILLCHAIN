@@ -29,11 +29,12 @@ export const VerificationPage: React.FC = () => {
 
     try {
       const res = await api.get(`/verify/${cleanId}`);
-      if (res.data) {
+      if (res.data && typeof res.data === 'object' && res.data.status) {
         setResult(res.data);
         setLoading(false);
         return;
       }
+      throw new Error('Invalid verification payload');
     } catch {
       // Local fallback
     }

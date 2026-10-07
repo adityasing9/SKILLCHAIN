@@ -16,7 +16,11 @@ export const InstitutionCredentialsPage: React.FC = () => {
   const fetchCredentials = async () => {
     try {
       const res = await api.get('/institutions/credentials');
-      setCredentials(res.data);
+      if (Array.isArray(res.data)) {
+        setCredentials(res.data);
+        return;
+      }
+      throw new Error('Not an array');
     } catch {
       setCredentials(getStoredCredentials());
     } finally {

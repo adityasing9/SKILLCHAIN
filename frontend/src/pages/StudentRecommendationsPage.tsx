@@ -11,7 +11,7 @@ export const StudentRecommendationsPage: React.FC = () => {
     const fetchRecs = async () => {
       try {
         const res = await api.get('/ai/recommendations');
-        if (res.data && res.data.length > 0) {
+        if (Array.isArray(res.data) && res.data.length > 0) {
           setRecommendations(res.data);
         } else {
           setRecommendations([

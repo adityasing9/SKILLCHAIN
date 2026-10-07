@@ -10,7 +10,11 @@ export const AdminDashboard: React.FC = () => {
     const fetchAdminStats = async () => {
       try {
         const res = await api.get('/admin/dashboard-stats');
-        setStats(res.data);
+        if (res.data && typeof res.data === 'object' && !Array.isArray(res.data) && res.data.total_users !== undefined) {
+          setStats(res.data);
+          return;
+        }
+        throw new Error('Invalid admin stats');
       } catch {
         const creds = getStoredCredentials();
         setStats({

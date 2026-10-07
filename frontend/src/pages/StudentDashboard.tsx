@@ -15,7 +15,11 @@ export const StudentDashboard: React.FC = () => {
     const fetchStats = async () => {
       try {
         const res = await api.get('/students/dashboard-stats');
-        setStats(res.data);
+        if (res.data && typeof res.data === 'object' && !Array.isArray(res.data) && res.data.total_credentials !== undefined) {
+          setStats(res.data);
+          return;
+        }
+        throw new Error('Invalid payload');
       } catch {
         // Local fallback stats
         const creds = getStoredCredentials();

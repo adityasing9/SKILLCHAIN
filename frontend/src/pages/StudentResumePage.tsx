@@ -45,7 +45,11 @@ export const StudentResumePage: React.FC = () => {
 
     try {
       const res = await api.post('/ai/resume-analysis', formData);
-      setResult(res.data);
+      if (res.data && typeof res.data === 'object' && Array.isArray(res.data.detected_skills)) {
+        setResult(res.data);
+        return;
+      }
+      throw new Error('Invalid resume payload');
     } catch {
       // Local fallback simulation
       setTimeout(() => {

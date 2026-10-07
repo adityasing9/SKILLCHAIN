@@ -44,9 +44,12 @@ export const RegisterPage: React.FC = () => {
     // 1. Attempt API
     try {
       const res = await api.post('/auth/register', payload);
-      login(res.data.access_token, res.data.user);
-      navigate(role === 'STUDENT' ? '/student/dashboard' : '/institution/dashboard');
-      return;
+      if (res.data && res.data.access_token && res.data.user) {
+        login(res.data.access_token, res.data.user);
+        navigate(role === 'STUDENT' ? '/student/dashboard' : '/institution/dashboard');
+        return;
+      }
+      throw new Error('Invalid register response');
     } catch {
       console.warn('API unavailable, registering locally');
     }

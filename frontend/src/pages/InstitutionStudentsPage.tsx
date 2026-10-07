@@ -10,7 +10,7 @@ export const InstitutionStudentsPage: React.FC = () => {
   const fetchStudents = async (query = '') => {
     try {
       const res = await api.get(`/institutions/students?search=${encodeURIComponent(query)}`);
-      if (res.data && res.data.length > 0) {
+      if (Array.isArray(res.data) && res.data.length > 0) {
         setStudents(res.data);
       } else {
         setStudents(fallbackList(query));

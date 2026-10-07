@@ -16,7 +16,11 @@ export const StudentCredentialsPage: React.FC = () => {
     const fetchCredentials = async () => {
       try {
         const res = await api.get('/students/credentials');
-        setCredentials(res.data);
+        if (Array.isArray(res.data)) {
+          setCredentials(res.data);
+          return;
+        }
+        throw new Error('Not an array');
       } catch {
         const creds = getStoredCredentials();
         const alexCreds = creds.filter(c => c.student_name.includes('Alex') || c.student_identifier === 'STU-2026-001');

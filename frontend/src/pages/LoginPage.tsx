@@ -42,18 +42,20 @@ export const LoginPage: React.FC = () => {
     // Attempt API
     try {
       const res = await api.post('/auth/login', { email: cleanEmail, password });
-      login(res.data.access_token, res.data.user);
-
-      if (res.data.user.role === 'STUDENT') {
-        navigate('/student/dashboard');
-      } else if (res.data.user.role === 'INSTITUTION') {
-        navigate('/institution/dashboard');
-      } else if (res.data.user.role === 'ADMIN') {
-        navigate('/admin/dashboard');
-      } else {
-        navigate('/');
+      if (res.data && res.data.access_token && res.data.user) {
+        login(res.data.access_token, res.data.user);
+        if (res.data.user.role === 'STUDENT') {
+          navigate('/student/dashboard');
+        } else if (res.data.user.role === 'INSTITUTION') {
+          navigate('/institution/dashboard');
+        } else if (res.data.user.role === 'ADMIN') {
+          navigate('/admin/dashboard');
+        } else {
+          navigate('/');
+        }
+        return;
       }
-      return;
+      throw new Error('Invalid login response');
     } catch {
       // Backend offline fallback
       const demo = DEMO_USERS[cleanEmail];
