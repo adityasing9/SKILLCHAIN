@@ -73,6 +73,9 @@ interface ThemeContextType {
   currentTheme: ThemeId;
   setTheme: (theme: ThemeId) => void;
   availableThemes: ThemeConfig[];
+  isDark: boolean;
+  toggleDarkMode: () => void;
+  setDarkMode: (dark: boolean) => void;
 }
 
 const ThemeContext = createContext<ThemeContextType | undefined>(undefined);
@@ -86,18 +89,59 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
     return 'emerald';
   });
 
+  const [isDark, setIsDark] = useState<boolean>(() => {
+    const savedMode = localStorage.getItem('skillchain_color_mode');
+    if (savedMode) {
+      return savedMode === 'dark';
+    }
+    // Default to light theme for a crisp modern Credify SaaS look
+    return false;
+  });
+
   const setTheme = (theme: ThemeId) => {
     setCurrentTheme(theme);
     localStorage.setItem('skillchain_theme', theme);
     document.documentElement.setAttribute('data-theme', theme);
   };
 
+  const setDarkMode = (dark: boolean) => {
+    setIsDark(dark);
+    localStorage.setItem('skillchain_color_mode', dark ? 'dark' : 'light');
+    if (dark) {
+      document.documentElement.setAttribute('data-mode', 'dark');
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.setAttribute('data-mode', 'light');
+      document.documentElement.classList.remove('dark');
+    }
+  };
+
+  const toggleDarkMode = () => {
+    setDarkMode(!isDark);
+  };
+
   useEffect(() => {
     document.documentElement.setAttribute('data-theme', currentTheme);
-  }, [currentTheme]);
+    if (isDark) {
+      document.documentElement.setAttribute('data-mode', 'dark');
+      document.documentElement.classList.add('dark');
+    } else {
+      document.documentElement.setAttribute('data-mode', 'light');
+      document.documentElement.classList.remove('dark');
+    }
+  }, [currentTheme, isDark]);
 
   return (
-    <ThemeContext.Provider value={{ currentTheme, setTheme, availableThemes: THEMES }}>
+    <ThemeContext.Provider
+      value={{
+        currentTheme,
+        setTheme,
+        availableThemes: THEMES,
+        isDark,
+        toggleDarkMode,
+        setDarkMode,
+      }}
+    >
       {children}
     </ThemeContext.Provider>
   );
