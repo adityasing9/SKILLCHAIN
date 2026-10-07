@@ -91,11 +91,11 @@ export const ThemeProvider: React.FC<{ children: React.ReactNode }> = ({ childre
 
   const [isDark, setIsDark] = useState<boolean>(() => {
     const savedMode = localStorage.getItem('skillchain_color_mode');
-    if (savedMode) {
+    if (savedMode !== null) {
       return savedMode === 'dark';
     }
-    // Default to light theme for a crisp modern Credify SaaS look
-    return false;
+    // Default to black (dark mode) for the first time
+    return true;
   });
 
   const setTheme = (theme: ThemeId) => {

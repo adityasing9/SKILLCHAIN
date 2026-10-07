@@ -6,7 +6,7 @@
 [![Solidity](https://img.shields.io/badge/Smart%20Contract-Solidity%20^0.8.24%20%7C%20EVM-363636.svg)](https://soliditylang.org/)
 [![Web3](https://img.shields.io/badge/Blockchain-Web3.py%20%7C%20Hardhat-f5841f.svg)](https://hardhat.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Styling-Tailwind%20CSS%20v4-38bdf8.svg)](https://tailwindcss.com/)
-[![Deployment: Vercel](https://img.shields.io/badge/Deployed-Vercel%20Production-black.svg)](https://skillchain-platform-lac.vercel.app)
+[![Deployment: Vercel](https://img.shields.io/badge/Deployed-Vercel%20Production-black.svg)](https://skillchain-verify.vercel.app)
 
 > **"Proof of Skills. Powered by Blockchain."**  
 > An enterprise-grade, decentralized credential issuance, instant verification, and AI-driven skill gap intelligence ecosystem.

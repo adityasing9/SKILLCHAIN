@@ -1,13 +1,30 @@
 <!doctype html>
-<html lang="en">
+<html lang="en" class="dark" data-mode="dark">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="theme-color" content="#2563eb" />
+    <meta name="theme-color" content="#090d16" />
     <meta name="description" content="SkillChain - Blockchain-Based Credential Verification & AI Skill Intelligence Platform" />
     <link rel="manifest" href="/manifest.json" />
     <title>SkillChain - Proof of Skills. Powered by Blockchain.</title>
+    <script>
+      (function() {
+        try {
+          var savedMode = localStorage.getItem('skillchain_color_mode');
+          var isDark = savedMode !== null ? savedMode === 'dark' : true;
+          if (isDark) {
+            document.documentElement.setAttribute('data-mode', 'dark');
+            document.documentElement.classList.add('dark');
+          } else {
+            document.documentElement.setAttribute('data-mode', 'light');
+            document.documentElement.classList.remove('dark');
+          }
+          var savedTheme = localStorage.getItem('skillchain_theme') || 'emerald';
+          document.documentElement.setAttribute('data-theme', savedTheme);
+        } catch (e) {}
+      })();
+    </script>
   </head>
   <body>
     <div id="root"></div>
